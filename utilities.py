@@ -2,6 +2,7 @@ import numpy as np
 import pathlib
 import shutil
 import os
+import math
 
 FOLDER_NAMES = ["imgs", "nparrays"]
 
@@ -31,3 +32,11 @@ def check_file_exists(f: str) -> bool:
     if p.exists() and p.is_file():
         return True
     return False
+
+
+def seconds_to_str(sec):
+    sec_i = math.ceil(sec)
+    hours = sec_i // 3600
+    minutes = (sec_i % 3600) // 60
+    seconds = sec_i % 60
+    return "{}:{1:02d}:{2:02d}".format(hours, minutes, seconds)

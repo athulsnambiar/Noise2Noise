@@ -10,6 +10,7 @@ from torch.utils.data import DataLoader
 from dataloader import NoiseDataloader
 from torch import optim
 import numpy as np
+from utilities import seconds_to_str
 
 # --------------------------------------------------------------
 # Hyperparameters
@@ -20,7 +21,7 @@ pretrained_model_file_path = None
 
 MODEL = {
     'BATCH_SIZE': 10,
-    'NUM_EPOCHS': 100,
+    'NUM_EPOCHS': 15,
     'NUM_WORKERS': 1
 }
 if torch.cuda.is_available():
@@ -92,6 +93,7 @@ def train():
         batch_counter = 1
 
         for batch in train_batcher:  # Get Batch
+            batch_start_time = time.time()
             print('\tProcessing Batch: {} of {}...'.format(batch_counter, num_batches))
             batch_counter += 1
 
@@ -108,14 +110,20 @@ def train():
             loss.backward()  # Calculate Gradients
             optimizer.step()  # Update Weights
             print('\tBatch (Train) Loss:', loss)
-            print()
+            batch_time_taken = time.time() - batch_start_time
+
+            print("\tTime taken:", seconds_to_str(batch_counter))
+            remaining_time = (MODEL['NUM_EPOCHS'] * num_batches + num_batches - batch_counter -1) * batch_time_taken
+            print("\tTime Remaining:", seconds_to_str(remaining_time))
 
         epoch_end_time = time.time()
         torch.save(network.state_dict(),
                    os.path.join(pp.trained_models_folder_path, 'Instance_' + str(instance).zfill(3), 'Model_Epoch_{}.pt'.format(str(epoch).zfill(3))))
 
+        time_taken = epoch_end_time - epoch_start_time
         print('Epoch (Train) Loss:', epoch_loss)
-        print('Epoch (Train) Time:', epoch_end_time - epoch_start_time)
+        print('Epoch (Train) Time:', seconds_to_str(time_taken))
+        print('Time Remaining    :', seconds_to_str(time_taken*(MODEL['NUM_EPOCHS']-epoch)))
         print('-' * 80)
 
 
