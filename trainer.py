@@ -19,9 +19,9 @@ import numpy as np
 pretrained_model_file_path = None
 
 MODEL = {
-    'BATCH_SIZE': 5,
+    'BATCH_SIZE': 10,
     'NUM_EPOCHS': 100,
-    'NUM_WORKERS': 5
+    'NUM_WORKERS': 1
 }
 if torch.cuda.is_available():
     MODEL['DEVICE'] = 'cuda'
@@ -38,8 +38,8 @@ OPTIMIZER = {
 }
 
 DATASET = {
-    'NOISE_TYPE': NoiseDataloader.GAUSSIAN,
-    'STD': 0.5,
+    'NOISE_TYPE': NoiseDataloader.TEXT,
+    # 'STD': 0.5,
     'NOISY_PER_IMAGE': 300
 }
 
@@ -63,7 +63,8 @@ def train():
     train_dataset = NoiseDataloader(dataset_type=NoiseDataloader.TRAIN,
                                     noisy_per_image=DATASET['NOISY_PER_IMAGE'],
                                     noise_type=DATASET['NOISE_TYPE'],
-                                    std=DATASET['STD'])
+                                    # std=DATASET['STD']
+                                    )
 
     train_batcher = DataLoader(dataset=train_dataset,
                                batch_size=MODEL['BATCH_SIZE'],
