@@ -42,4 +42,4 @@ def seconds_to_str(sec):
     hours = sec_i // 3600
     minutes = (sec_i % 3600) // 60
     seconds = sec_i % 60
-    return "{}:{1:02d}:{2:02d}".format(hours, minutes, seconds)
+    return "{0:2d}:{1:02d}:{2:02d}".format(hours, minutes, seconds)

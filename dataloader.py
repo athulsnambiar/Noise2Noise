@@ -116,7 +116,6 @@ class NoiseDataloader(Dataset):
                 noisy_image_2 = np.random.poisson(clean_patch)
 
         elif self.noise_type == NoiseDataloader.TEXT:
-            print(clean_patch.shape)
             noisy_image_1 = NoiseDataloader.textnoise(clean_patch)
             if self.dataset_type == NoiseDataloader.TRAIN:
                 noisy_image_2 = NoiseDataloader.textnoise(clean_patch)
