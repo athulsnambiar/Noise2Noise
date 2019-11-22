@@ -112,7 +112,7 @@ def train():
             print('\tBatch (Train) Loss:', loss)
             batch_time_taken = time.time() - batch_start_time
 
-            print("\tTime taken:", seconds_to_str(batch_counter))
+            print("\tTime taken:", seconds_to_str(batch_time_taken))
             remaining_time = (MODEL['NUM_EPOCHS'] * num_batches + num_batches - batch_counter -1) * batch_time_taken
             print("\tTime Remaining:", seconds_to_str(remaining_time))
 
