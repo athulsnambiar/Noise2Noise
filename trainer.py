@@ -15,12 +15,13 @@ import numpy as np
 # Hyperparameters
 # --------------------------------------------------------------
 
-pretrained_model_file_path = os.path.abspath(r"D:\Codes\Python\IIT Bombay\Semester 3\[CS 663] Fundamentals of Digital Image Processing\Course Project\trained models\Instance_001\Model_Epoch_000.pt")
+# pretrained_model_file_path = os.path.abspath(r"D:\Codes\Python\IIT Bombay\Semester 3\[CS 663] Fundamentals of Digital Image Processing\Course Project\trained models\Instance_001\Model_Epoch_000.pt")
+pretrained_model_file_path = None
 
 MODEL = {
     'BATCH_SIZE': 5,
     'NUM_EPOCHS': 100,
-    'NUM_WORKERS': 4
+    'NUM_WORKERS': 5
 }
 if torch.cuda.is_available():
     MODEL['DEVICE'] = 'cuda'
@@ -39,7 +40,7 @@ OPTIMIZER = {
 DATASET = {
     'NOISE_TYPE': NoiseDataloader.GAUSSIAN,
     'STD': 0.5,
-    'NOISY_PER_IMAGE': 500
+    'NOISY_PER_IMAGE': 300
 }
 
 
