@@ -83,6 +83,8 @@ def train():
     os.mkdir(os.path.join(pp.trained_models_folder_path, 'Instance_' + str(instance).zfill(3)))
 
     num_batches = math.floor(len(train_dataset) / MODEL['BATCH_SIZE'])
+
+    batchtimes = []
     for epoch in range(MODEL['NUM_EPOCHS']):
 
         epoch_start_time = time.time()
@@ -112,8 +114,13 @@ def train():
             print('\tBatch (Train) Loss:', loss)
             batch_time_taken = time.time() - batch_start_time
 
+            if len(batchtimes) > 100:
+                batchtimes.pop()
+
+            batchtimes.append(batch_time_taken)
+
             print("\tTime taken:", seconds_to_str(batch_time_taken))
-            remaining_time = (MODEL['NUM_EPOCHS'] * num_batches + num_batches - batch_counter -1) * batch_time_taken
+            remaining_time = (MODEL['NUM_EPOCHS'] * num_batches + num_batches - batch_counter -1) * sum(batchtimes)/len(batchtimes)
             print("\tTime Remaining:", seconds_to_str(remaining_time))
 
         epoch_end_time = time.time()
