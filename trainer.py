@@ -20,7 +20,7 @@ from utilities import seconds_to_str
 pretrained_model_file_path = None
 
 MODEL = {
-    'BATCH_SIZE': 10,
+    'BATCH_SIZE': 12,
     'NUM_EPOCHS': 15,
     'NUM_WORKERS': 1
 }
@@ -35,7 +35,7 @@ OPTIMIZER = {
     'LR': 0.001,
     'BETAS': (0.9, 0.99),
     'EPSILON': 1e-08,
-    'LOSS_FUNCTION': torch.nn.MSELoss().to(MODEL['DEVICE'])
+    'LOSS_FUNCTION': torch.nn.L1Loss().to(MODEL['DEVICE'])
 }
 
 DATASET = {
@@ -120,7 +120,7 @@ def train():
             batchtimes.append(batch_time_taken)
 
             print("\tTime taken:", seconds_to_str(batch_time_taken))
-            remaining_time = (MODEL['NUM_EPOCHS'] * num_batches + num_batches - batch_counter -1) * sum(batchtimes)/len(batchtimes)
+            remaining_time = ((MODEL['NUM_EPOCHS'] - epoch - 1) * num_batches + num_batches - batch_counter -1) * sum(batchtimes)/len(batchtimes)
             print("\tTime Remaining:", seconds_to_str(remaining_time))
 
         epoch_end_time = time.time()
