@@ -11,6 +11,7 @@ from dataloader import NoiseDataloader
 from torch import optim
 import numpy as np
 from utilities import seconds_to_str
+import matplotlib.pyplot as plt
 
 # --------------------------------------------------------------
 # Hyperparameters
@@ -35,7 +36,7 @@ OPTIMIZER = {
     'LR': 0.001,
     'BETAS': (0.9, 0.99),
     'EPSILON': 1e-08,
-    'LOSS_FUNCTION': torch.nn.MSELoss().to(MODEL['DEVICE'])
+    'LOSS_FUNCTION': torch.nn.L1Loss().to(MODEL['DEVICE'])
 }
 
 DATASET = {
