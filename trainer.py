@@ -11,6 +11,7 @@ from dataloader import NoiseDataloader
 from torch import optim
 import numpy as np
 from utilities import seconds_to_str
+import matplotlib.pyplot as plt
 
 # --------------------------------------------------------------
 # Hyperparameters

@@ -68,7 +68,7 @@ class NoiseDataloader(Dataset):
             for image_file_name in os.listdir(self.images_folder_path):
                 image_file_path = os.path.join(self.images_folder_path, image_file_name)
                 if os.path.isfile(image_file_path) and os.path.splitext(image_file_name)[1].lower() in NoiseDataloader.IMAGE_EXTENSIONS:
-                    image = np.asarray(cv2.cvtColor(cv2.imread(image_file_path), cv2.COLOR_BGR2RGB) / 255, dtype=np.float32)
+                    image = cv2.cvtColor(cv2.imread(image_file_path), cv2.COLOR_BGR2RGB)
                     for i in range(0, image.shape[0], NoiseDataloader.PATCH_STRIDE):
                         if i + NoiseDataloader.PATCH_STRIDE >= image.shape[0]:
                             i = image.shape[0] - NoiseDataloader.PATCH_STRIDE
@@ -96,6 +96,10 @@ class NoiseDataloader(Dataset):
     def __getitem__(self, idx):
         clean_patch = self.clean_patches[int(idx) % self.number_of_clean_images]
         img1, img2 = self.add_noise(clean_patch)
+
+        # return img1/255, img2/255
+        img1, img2 = (img1/255, img2/255)
+
         return (NoiseDataloader.convert_image_to_model_input(img1),
                 NoiseDataloader.convert_image_to_model_input(img2))
 
@@ -157,7 +161,7 @@ class NoiseDataloader(Dataset):
             font_size = np.random.uniform(2, 4)
             col = tuple(np.random.randint(0, 255, 3).astype(np.float64))
             # thickness = np.random.randint(3, 10)
-            pos = (np.random.randint(0-x/100, x-x/25), np.random.randint(0-y/100, y-y/25))
+            pos = (np.random.randint(0-x/100, x-x/50), np.random.randint(0-y/100, y-y/25))
             noise = cv2.putText(noise, string, pos, font, font_size, col, 3, line_style)
 
         return noise
